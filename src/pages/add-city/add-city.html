@@ -2,11 +2,32 @@
 
   <ion-navbar color="danger">
     <ion-title>Agregar Ciudad</ion-title>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-searchbar>Buscar ciudad...</ion-searchbar>
+  <!-- <ion-searchbar>Buscar ciudad...</ion-searchbar> -->
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Ciudad</ion-label>
+      <ion-input type="text" [(ngModel)]="data.city"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>País</ion-label>
+      <ion-select [(ngModel)]="data.country">
+        <ion-option value="us">United States</ion-option>
+        <ion-option value="uk">United Kingdom</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+  <div padding>
+    <button ion-button block (click)="dismiss(data)">Agregar</button>
+  </div>
 </ion-content>

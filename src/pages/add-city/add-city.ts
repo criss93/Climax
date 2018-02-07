@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the AddCityPage page.
@@ -15,11 +15,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddCityPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  data = {
+    city: '',
+    country: 'us'
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddCityPage');
+  constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
   }
+
+  dismiss(data) {
+    this.view.dismiss(data);
+  }
+
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad AddCityPage');
+  // }
 
 }

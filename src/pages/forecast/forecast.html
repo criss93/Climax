@@ -1,0 +1,27 @@
+<!--
+  Generated template for the ForecastPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Pronóstico de {{citiesList.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let day of forecast">
+      <ion-thumbnail item-left>
+        <img src="http://openweathermap.org/img/w/{{day.weather[0].icon}}.png">
+      </ion-thumbnail>
+      <h2>{{day.dt * 1000 | date: 'EEEE'}}</h2>
+      <h3>High: {{day.main.temp_max | temperaturePipe}}</h3>
+      <h3>Low: {{day.main.temp_min | temperaturePipe}}</h3>
+    </ion-item>
+  </ion-list>
+</ion-content>

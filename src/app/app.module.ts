@@ -9,6 +9,10 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
 import { MyApp } from './app.component';
+import { RestServiceProvider } from '../providers/rest-service/rest-service';
+import { HttpClientModule } from '@angular/common/http';
+import { PipesModule } from '../pipes/pipes.module';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -17,7 +21,8 @@ import { MyApp } from './app.component';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -26,7 +31,9 @@ import { MyApp } from './app.component';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    RestServiceProvider,
+    PipesModule
   ]
 })
 export class AppModule {}
