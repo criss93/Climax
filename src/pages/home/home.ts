@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { RestServiceProvider } from '../../providers/rest-service/rest-service';
+// import { Observable } from 'rxjs/Observable';
 
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -15,8 +11,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  localWeather = [];
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: RestServiceProvider) {
+    this.getLocalWeather();
   }
+
+  getLocalWeather() {
+    try {
+      this.restService.localWeather().subscribe(data => {
+        this.localWeather = Array.of(data);
+      })
+      
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  
+
+  viewForecast(citiesList) {
+    this.navCtrl.push('ForecastPage', {citiesList : citiesList})
+  }
+
+
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');

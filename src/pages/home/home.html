@@ -9,4 +9,15 @@
 
 <ion-content padding>
   <ion-searchbar>Buscar ciudad...</ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let city of localWeather" (click)="viewForecast(city)">
+      <ion-thumbnail item-left>
+        <img src="http://openweathermap.org/img/w/{{city.weather[0].icon}}.png">
+      </ion-thumbnail>
+      <h2>{{city.name}}</h2> 
+      <h3>{{city.dt * 1000 | date: 'EEEE'}}</h3>
+      <h3>Low: {{city.temp_min | temperaturePipe}} High: {{city.main.temp_max | temperaturePipe}}</h3>
+      <ion-icon name="arrow-forward" item-right></ion-icon>
+    </ion-item>
+  </ion-list>
 </ion-content>

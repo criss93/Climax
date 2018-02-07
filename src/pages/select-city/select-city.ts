@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+// import { Observable } from 'rxjs/Observable';
+// import 'rxjs/add/operator/map';
 
 @IonicPage()
 @Component({

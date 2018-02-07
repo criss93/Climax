@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { FIREBASE_CONFIG } from './firebase.credentials';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 import { MyApp } from './app.component';
@@ -33,7 +34,8 @@ import { PipesModule } from '../pipes/pipes.module';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestServiceProvider,
-    PipesModule
+    PipesModule,
+    Geolocation
   ]
 })
 export class AppModule {}
