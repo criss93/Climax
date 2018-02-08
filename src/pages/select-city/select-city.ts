@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
+import { StorageProvider} from '../../providers/storage/storage';
 // import { Observable } from 'rxjs/Observable';
 // import 'rxjs/add/operator/map';
 
@@ -13,7 +14,8 @@ export class SelectCityPage {
 
   citiesList = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: RestServiceProvider, private modCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: StorageProvider , private restService: RestServiceProvider, private modCtrl: ModalController) {
+    this.getStoredWeather();
   }
 
   addWeather() {
@@ -27,6 +29,12 @@ export class SelectCityPage {
     addWeatherModal.present();
   }
 
+  getStoredWeather() {
+    this.storage.getData().then(cities => {
+      this.citiesList = JSON.parse(cities) || [];
+    })
+  }
+
   navigateToPage(pageName: string) {
     this.navCtrl.push(pageName);
   }
@@ -36,6 +44,7 @@ export class SelectCityPage {
       this.restService.cityWeather(city, country)
       .subscribe(data => {
         this.citiesList.push(data);
+        this.storage.setData(data);
       })
       
     } catch (e) {

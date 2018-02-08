@@ -13,6 +13,8 @@ import { MyApp } from './app.component';
 import { RestServiceProvider } from '../providers/rest-service/rest-service';
 import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from '../pipes/pipes.module';
+import { StorageProvider } from '../providers/storage/storage';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { PipesModule } from '../pipes/pipes.module';
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -35,7 +38,8 @@ import { PipesModule } from '../pipes/pipes.module';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RestServiceProvider,
     PipesModule,
-    Geolocation
+    Geolocation,
+    StorageProvider
   ]
 })
 export class AppModule {}
