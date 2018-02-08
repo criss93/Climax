@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
+import { StorageProvider } from '../../providers/storage/storage';
 // import { Observable } from 'rxjs/Observable';
 
 
@@ -12,15 +13,28 @@ import { RestServiceProvider } from '../../providers/rest-service/rest-service';
 export class HomePage {
 
   localWeather = [];
+  counter: number;
+  aux: Array<Object>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private restService: RestServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: StorageProvider , private restService: RestServiceProvider) {
+    // this.storage.clearStorage();
+    this.storage.getCounter().then(counter => {
+      this.counter = counter + 1;
+    });
     this.getLocalWeather();
+
   }
 
   getLocalWeather() {
     try {
       this.restService.localWeather().subscribe(data => {
         this.localWeather = Array.of(data);
+        if (this.counter == 1) {
+          this.storage.setData(data);
+          this.storage.setCounter(this.counter);
+        } else {
+          this.storage.setCounter(this.counter)
+        }
       })
       
     } catch (e) {
