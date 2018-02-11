@@ -19,11 +19,11 @@ export class HomePage {
   name: string;
   country: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider, private modalCtrl: ModalController, private storage: StorageProvider, private restService: RestServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private modalCtrl: ModalController, private storage: StorageProvider, private restService: RestServiceProvider) {
     // this.storage.clearStorage();
-    // this.storage.getCounter().then(counter => {
-    //   this.counter = counter + 1;
-    // });
+    this.storage.getCounter().then(counter => {
+      this.counter = counter + 1;
+    });
     this.getLocalWeather();
 
   }
@@ -34,17 +34,14 @@ export class HomePage {
       this.restService.localWeather()
         .subscribe(data => {
           this.localWeather = Array.of(data);
-          this.name = data.name;
-          this.country = data.sys.country.toString();
-          this.database.addCity(this.name, this.country);
-          // if (this.counter == 1) {
-          //   this.data.city = data.name
-          //   this.data.country = data.sys.country.toString()
-          //   this.storage.setData(this.data);
-          //   this.storage.setCounter(this.counter);
-          // } else {
-          //   this.storage.setCounter(this.counter)
-          // }
+          if (this.counter == 1) {
+            this.name = data.name;
+            this.country = data.sys.country.toString();
+            this.database.addCity(this.name, this.country);
+            this.storage.setCounter(this.counter);
+          } else {
+            this.storage.setCounter(this.counter)
+          }
         });
 
     } catch (e) {

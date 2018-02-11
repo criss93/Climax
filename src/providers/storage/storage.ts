@@ -9,19 +9,27 @@ export class StorageProvider {
   // public cities: Array<Object>;
   // public cities: Array<any>;
  
-  public cities: Array<Object>;
+  // public cities: Array<Object>;
 
   constructor(private storage: Storage) {
-    this.getData().then(data => {
-      this.cities = JSON.parse(data);
+    // this.getData().then(data => {
+    //   this.cities = JSON.parse(data);
       // this.cities = data;
-    })
+    // })
+  }
+
+  setCounter(counter) {
+    this.storage.set('counter', counter)
+  }
+
+  getCounter(){
+    return this.storage.get('counter')
   }
 
   clearStorage() {
     this.storage.clear();
   } 
-  
+
   // setDataTest(citiesList) {
   //   if(!this.cities){
   //     this.cities = citiesList;
@@ -46,26 +54,18 @@ export class StorageProvider {
   //   this.storage.set('listOfCities', this.cities);
   // }
 
-  setData(ciudades) {
-    if(!this.cities){
-      this.cities = [ciudades]
-    } else {
-      this.cities.push(ciudades)
-    }
+  // setData(ciudades) {
+  //   if(!this.cities){
+  //     this.cities = [ciudades]
+  //   } else {
+  //     this.cities.push(ciudades)
+  //   }
 
-    this.storage.set('ciudades', JSON.stringify(this.cities));
-  }
+  //   this.storage.set('ciudades', JSON.stringify(this.cities));
+  // }
 
-  getData() {
-    return this.storage.get('ciudades');
-  }
-
-  setCounter(counter) {
-    this.storage.set('counter', counter)
-  }
-
-  getCounter(){
-    return this.storage.get('counter')
-  }
+  // getData() {
+  //   return this.storage.get('ciudades');
+  // }
 
 }
