@@ -7,6 +7,7 @@ import { FIREBASE_CONFIG } from './firebase.credentials';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 
 import { MyApp } from './app.component';
@@ -15,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { PipesModule } from '../pipes/pipes.module';
 import { StorageProvider } from '../providers/storage/storage';
 import { IonicStorageModule } from '@ionic/storage';
+import { GoogleMapsProvider } from '../providers/google-maps/google-maps';
+import { DatabaseProvider } from '../providers/database/database';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { IonicStorageModule } from '@ionic/storage';
     RestServiceProvider,
     PipesModule,
     Geolocation,
-    StorageProvider
+    StorageProvider,
+    GoogleMapsProvider,
+    SQLite,
+    DatabaseProvider,
   ]
 })
 export class AppModule {}

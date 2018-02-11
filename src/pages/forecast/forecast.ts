@@ -20,11 +20,11 @@ export class ForecastPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private restService: RestServiceProvider) {
     this.citiesList = navParams.get('citiesList');
-    this.getForecast(this.citiesList.id)
+    this.getForecast(this.citiesList.name, this.citiesList.country)
   }
 
-  getForecast(cityId) {
-    this.restService.forecast(cityId, 5)
+  getForecast(cityId, countryCode) {
+    this.restService.forecast(cityId, countryCode, 5)
     .subscribe(data => {
       this.forecast = data['list'];
     })

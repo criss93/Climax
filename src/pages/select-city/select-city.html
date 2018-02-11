@@ -11,18 +11,18 @@
 
   <ion-list>
     <ion-item *ngFor="let city of citiesList" (click)="viewForecast(city)">
-      <ion-thumbnail item-left>
+      <!-- <ion-thumbnail item-left>
         <img src="http://openweathermap.org/img/w/{{city.weather[0].icon}}.png">
-      </ion-thumbnail>
-      <h2>{{city.main.temp | temperaturePipe}}</h2>
-      <h3>{{city.name}}</h3>
-      <p>Low: {{city.main.temp_min | temperaturePipe}} High:{{city.main.temp_max | temperaturePipe}}</p>
+      </ion-thumbnail> -->
+      <!-- <h2>{{city.main.temp | temperaturePipe}}</h2> -->
+      <h2>{{city.name}}, {{city.country}}</h2>
+      <!-- <p>Low: {{city.main.temp_min | temperaturePipe}} High:{{city.main.temp_max | temperaturePipe}}</p> -->
       <ion-icon name="arrow-forward" item-right></ion-icon>
     </ion-item>
   </ion-list>
 
   <ion-fab bottom right>
-    <button ion-fab color="primary" (click)="addWeather()">
+    <button ion-fab color="primary" (click)="addCity()">
       <ion-icon name="add"></ion-icon>
     </button> 
   </ion-fab>

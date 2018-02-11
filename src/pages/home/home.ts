@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
 import { StorageProvider } from '../../providers/storage/storage';
+import { DatabaseProvider } from '../../providers/database/database';
 // import { Observable } from 'rxjs/Observable';
 
 
@@ -15,42 +16,73 @@ export class HomePage {
   localWeather = [];
   counter: number;
   aux: Array<Object>;
+  name: string;
+  country: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: StorageProvider , private restService: RestServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private database: DatabaseProvider, private modalCtrl: ModalController, private storage: StorageProvider, private restService: RestServiceProvider) {
     // this.storage.clearStorage();
-    this.storage.getCounter().then(counter => {
-      this.counter = counter + 1;
-    });
+    // this.storage.getCounter().then(counter => {
+    //   this.counter = counter + 1;
+    // });
     this.getLocalWeather();
 
   }
 
+
   getLocalWeather() {
     try {
-      this.restService.localWeather().subscribe(data => {
-        this.localWeather = Array.of(data);
-        if (this.counter == 1) {
-          this.storage.setData(data);
-          this.storage.setCounter(this.counter);
-        } else {
-          this.storage.setCounter(this.counter)
-        }
-      })
-      
+      this.restService.localWeather()
+        .subscribe(data => {
+          this.localWeather = Array.of(data);
+          this.name = data.name;
+          this.country = data.sys.country.toString();
+          this.database.addCity(this.name, this.country);
+          // if (this.counter == 1) {
+          //   this.data.city = data.name
+          //   this.data.country = data.sys.country.toString()
+          //   this.storage.setData(this.data);
+          //   this.storage.setCounter(this.counter);
+          // } else {
+          //   this.storage.setCounter(this.counter)
+          // }
+        });
+
     } catch (e) {
       console.log(e);
     }
   }
-  
+
 
   viewForecast(citiesList) {
-    this.navCtrl.push('ForecastPage', {citiesList : citiesList})
+    this.navCtrl.push('ForecastPage', { citiesList: citiesList })
   }
 
 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
+  }
+
+  navigateToGeolocationPage() {
+    let modal = this.modalCtrl.create('GeolocationPage');
+
+    modal.onDidDismiss((location) => {
+      console.log(location);
+    });
+
+    modal.present();
+  }
+
+  navigateToTestPage() {
+
+    let modal = this.modalCtrl.create('TestPage');
+
+    modal.onDidDismiss((location) => {
+      console.log(location);
+    });
+
+    modal.present();
+
   }
 
   // ionViewWillLoad(){

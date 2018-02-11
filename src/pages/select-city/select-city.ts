@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
-import { StorageProvider} from '../../providers/storage/storage';
+import { StorageProvider } from '../../providers/storage/storage';
+import { DatabaseProvider } from '../../providers/database/database';
+// import { Cities } from '../../models/cities.interface';s
 // import { Observable } from 'rxjs/Observable';
 // import 'rxjs/add/operator/map';
 
@@ -12,52 +14,83 @@ import { StorageProvider} from '../../providers/storage/storage';
 })
 export class SelectCityPage {
 
-  citiesList = [];
+  // citiesList: Array<Cities>;
+  // city: Cities;
+  citiesList: any[] = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: StorageProvider , private restService: RestServiceProvider, private modCtrl: ModalController) {
-    this.getStoredWeather();
+  // TestList = [];
+
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private storage: StorageProvider, private restService: RestServiceProvider, private modCtrl: ModalController) {
+    
+    // this.getTest();
   }
 
-  addWeather() {
+  ionViewDidLoad() {
+    this.getStoredCities();
+  }
+
+  addCity() {
     let addWeatherModal = this.modCtrl.create('AddCityPage');
     addWeatherModal.onWillDismiss((data) => {
       if (data) {
-        this.getWeather(data.city, data.country);
+        console.log(data);
+        this.database.addCity(data.city, data.country);
+        this.getStoredCities();
+        // this.citiesList.push(data);
+        // this.storage.setData(this.citiesList);
+        // this.getCities(data.city, data.country);
 
       }
     });
     addWeatherModal.present();
   }
 
-  getStoredWeather() {
-    this.storage.getData().then(cities => {
-      this.citiesList = JSON.parse(cities) || [];
-    })
+  // getTest() {
+  //   this.storage.getDataTest().then(cities => {
+  //     this.TestList = JSON.parse(cities) || [];
+  //   })
+  // }
+
+  getStoredCities() {
+    this.database.getCities().then(data => {
+      this.citiesList = data
+    }).catch((error) => {
+      console.log(error);
+    });
+    // return this.database.getCities().then((data) => {
+    //   let list: Array<Cities> = [];
+    //   if (data) {
+    //     for(let city of data) {
+    //       list.push(new city(city.name, city.country))
+    //     }
+    //     this.citiesList = list;
+    //   }
+    // });
+    // this.storage.getData().then(cities => {
+    //   this.citiesList = JSON.parse(cities) || [];
+    //   // this.citiesList = cities;
+    // })
   }
 
   navigateToPage(pageName: string) {
     this.navCtrl.push(pageName);
   }
 
-  getWeather(city: string, country: string) {
-    try {
-      this.restService.cityWeather(city, country)
-      .subscribe(data => {
-        this.citiesList.push(data);
-        this.storage.setData(data);
-      })
-      
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  // getWeather(city: string, country: string) {
+  //   try {
+  //     this.restService.cityWeather(city, country)
+  //     .subscribe(data => {
+  //       this.citiesList.push(data);
+  //     })
+
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 
   viewForecast(citiesList) {
-    this.navCtrl.push('ForecastPage', {citiesList : citiesList})
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SelectCityPage');
+    this.navCtrl.push('ForecastPage', { citiesList: citiesList })
   }
 
 }

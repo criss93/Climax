@@ -7,17 +7,44 @@ import { Storage } from '@ionic/storage';
 export class StorageProvider {
 
   // public cities: Array<Object>;
-  public cities: Array<any>;
+  // public cities: Array<any>;
+ 
+  public cities: Array<Object>;
 
   constructor(private storage: Storage) {
     this.getData().then(data => {
       this.cities = JSON.parse(data);
+      // this.cities = data;
     })
   }
 
   clearStorage() {
     this.storage.clear();
-  }
+  } 
+  
+  // setDataTest(citiesList) {
+  //   if(!this.cities){
+  //     this.cities = citiesList;
+  //   } else {
+  //     this.cities.push(citiesList);
+  //   }
+
+  //   this.storage.set('listOfCities', JSON.stringify(this.cities));
+  // }
+
+  // getDataTest() {
+  //   return this.storage.get('listOfCities');
+  // }
+
+  // setData(citiesList) {
+  //   if(!this.cities){
+  //     this.cities = citiesList;
+  //   } else {
+  //     this.cities.push(citiesList);
+  //   }
+
+  //   this.storage.set('listOfCities', this.cities);
+  // }
 
   setData(ciudades) {
     if(!this.cities){

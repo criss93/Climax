@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar color="danger">
+    <ion-title>Geolocation</ion-title>
+    <ion-buttons left>
+      <button ion-button (click)="close()" icon-start>
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()"></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+  </ion-list>
+
+</ion-header>
+
+
+<ion-content class="map">
+  <div #map id="map" style="height: 300px"></div>
+  <div padding></div>
+
+  <button ion-button block>Watch Forecast</button>
+  <button ion-button block>Add to the Location List</button>
+  <button ion-button block>Search by Name and Country Code</button>
+</ion-content>
+
+
+<!-- Contiene una barra de búsqueda que definirá la consulta que se utiliza con la API de Google Places
+para predecir algunas ubicaciones. También tenemos una lista que mostrará los resultados de esas
+predicciones (y le dará al usuario la posibilidad de seleccionar una de ellas).
+
+Un enlace de evento touchstart se usa para los lugares que se mostrarán en la lista porque
+si se usa un evento click requeriría que el usuario toque dos veces para seleccionar un lugar
+(una para eliminar el foco de la barra de búsqueda, otra para activar un clic un lugar
+en particular). La desventaja de esto es que esto solo funcionará en dispositivos,
+o a través de algo así como el emulador móvil de Chrome DevTools (para que los eventos táctiles
+se desencadenen en lugar de los eventos del mouse). -->

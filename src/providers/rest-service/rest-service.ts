@@ -30,10 +30,19 @@ export class RestServiceProvider {
     return this.http.get(url)
   }
 
-  forecast(cityId: string, numOfDays: number) {
+  forecast(cityname: string, countryCode: string, numOfDays: number) {
     let url = this.apiUrl + 'forecast';
-    url += '?id=' + cityId;
+    url += '?q=' + cityname;
+    url += ',' + countryCode;
     url += '&cnt=' + numOfDays;
+    url += '&APPID=' + this.apiKey;
+
+    return this.http.get(url)
+  }
+
+  test(city: string ){
+    let url = this.apiUrl + 'weather';
+    url += '?q=' + city;
     url += '&APPID=' + this.apiKey;
 
     return this.http.get(url)
@@ -66,8 +75,10 @@ export class RestServiceProvider {
 
         this.http.get(url).subscribe(data => {
           observer.next(data)
-        })
-      })
+        } )
+      }).catch((error) => {
+        console.log(error);
+      });
     });
 
     return obs;

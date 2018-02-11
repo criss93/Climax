@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="danger">
-    <ion-title>Agregar Ciudad</ion-title>
+    <ion-title>Climax</ion-title>
     <ion-buttons>
       <button ion-button (click)="dismiss()">
         <ion-icon name="arrow-back"></ion-icon>
@@ -16,18 +16,21 @@
   <!-- <ion-searchbar>Buscar ciudad...</ion-searchbar> -->
   <ion-list>
     <ion-item>
-      <ion-label floating>Ciudad</ion-label>
+      <ion-label floating>City</ion-label>
       <ion-input type="text" [(ngModel)]="data.city"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label floating>País</ion-label>
-      <ion-select [(ngModel)]="data.country">
+      <ion-label floating>Country</ion-label>
+      <ion-input type="text" [(ngModel)]="data.country"></ion-input>
+      <!-- <ion-select [(ngModel)]="data.country">
         <ion-option value="us">United States</ion-option>
         <ion-option value="uk">United Kingdom</ion-option>
-      </ion-select>
+      </ion-select> -->
     </ion-item>
   </ion-list>
   <div padding>
-    <button ion-button block (click)="dismiss(data)">Agregar</button>
+    <button ion-button block (click)="dismiss(data)">Add</button>
+    <button ion-button block (click)="watchForecast(data)">Watch Forecast</button>
+    
   </div>
 </ion-content>

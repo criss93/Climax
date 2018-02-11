@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar color="danger">
+    <ion-title>Geolocation</ion-title>
+    <ion-buttons left>
+      <button ion-button (click)="close()" icon-start>
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-searchbar [(ngModel)]="query" (ionInput)="searchPlace()"></ion-searchbar>
+  </ion-toolbar>
+
+  <ion-list>
+    <ion-item *ngFor="let place of places" (touchstart)="selectPlace(place)">{{place.description}}</ion-item>
+  </ion-list>
+
+</ion-header>
+
+
+<ion-content class="map">
+  <div #map id="map" style="height: 300px"></div>
+  <div padding></div>
+
+  <button ion-button block>Watch Forecast</button>
+  <button ion-button block>Add to the Location List</button>
+</ion-content>

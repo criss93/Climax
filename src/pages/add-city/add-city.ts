@@ -17,7 +17,7 @@ export class AddCityPage {
 
   data = {
     city: '',
-    country: 'us'
+    country: ''
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private view: ViewController) {
@@ -27,8 +27,8 @@ export class AddCityPage {
     this.view.dismiss(data);
   }
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad AddCityPage');
-  // }
+  watchForecast(data) {
+    this.navCtrl.push('ForecastPage', data)
+  }
 
 }
