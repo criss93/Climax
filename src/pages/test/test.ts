@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ViewController, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
+import { DatabaseProvider } from '../../providers/database/database';
 
 @IonicPage()
 @Component({
@@ -20,10 +21,15 @@ export class TestPage {
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
+  forecastDisabled: boolean;
+  countryCode: string;
+  fromMap = true;
+  byGeo = false;
 
-  constructor(public navCtrl: NavController, private zone: NgZone, private maps: GoogleMapsProvider, private viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, private database: DatabaseProvider, private modCtrl: ModalController, private zone: NgZone, private maps: GoogleMapsProvider, private viewCtrl: ViewController) {
     this.searchDisabled = true;
     this.saveDisabled = true;
+    this.forecastDisabled = true;
 
   }
 
@@ -37,7 +43,7 @@ export class TestPage {
 
     });
 
-    
+
 
   }
 
@@ -48,7 +54,7 @@ export class TestPage {
     let location = {
       lat: null,
       lng: null,
-      name: place.name
+      name: place.name,
     };
 
     this.placesService.getDetails({ placeId: place.place_id }, (details) => {
@@ -58,10 +64,20 @@ export class TestPage {
         location.name = details.name;
         location.lat = details.geometry.location.lat();
         location.lng = details.geometry.location.lng();
+        for (let i = 0; i < details.address_components.length; i++) {
+          let addressType = details.address_components[i].types[0];
+          if (addressType == "country") {
+            this.countryCode = details.address_components[i].short_name;
+          }
+        }
         this.saveDisabled = false;
 
+        if(this.countryCode != ''){
+          this.forecastDisabled = false;
+        }
+
         this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
-        
+
 
         this.location = location;
 
@@ -102,14 +118,30 @@ export class TestPage {
   }
 
   save() {
-    this.viewCtrl.dismiss(this.location);
+    this.viewCtrl.dismiss({location: this.location, countryCode: this.countryCode});
   }
 
   close() {
     this.viewCtrl.dismiss();
   }
 
+  viewForecast() {
+    this.navCtrl.push('ForecastPage', { citiesList: this.location, countryAux: this.countryCode, map: this.fromMap, geo: this.byGeo })
+  }
 
+  navigateToPage() {
+    this.navCtrl.push('AddCityPage');
+  }
+
+  addCity() {
+    let addWeatherModal = this.modCtrl.create('AddCityPage');
+    addWeatherModal.onWillDismiss((data) => {
+      if (data) {
+        this.database.addCity(data.city, data.country);
+      }
+    });
+    addWeatherModal.present();
+  }
 
 
 }

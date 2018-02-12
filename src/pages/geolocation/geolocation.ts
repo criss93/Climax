@@ -19,10 +19,18 @@ export class GeolocationPage {
   searchDisabled: boolean;
   saveDisabled: boolean;
   location: any;
+  lat: number;
+  lon: number;
+  forecastDisabled: boolean;
+  fromMap = true;
+  byGeo = true;
+  cityName: string = '';
+  countryCode: string = '';
 
   constructor(public navCtrl: NavController, private zone: NgZone, private maps: GoogleMapsProvider, private viewCtrl: ViewController) {
     this.searchDisabled = true;
     this.saveDisabled = true;
+    this.forecastDisabled = true;
 
   }
 
@@ -34,10 +42,34 @@ export class GeolocationPage {
       this.placesService = new google.maps.places.PlacesService(this.maps.map);
       this.searchDisabled = false;
 
+      this.maps.map.addListener('click', (event) => {
+
+        this.lat = event.latLng.lat();
+        this.lon = event.latLng.lng();
+        this.forecastDisabled = false;
+        let geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ location: event.latLng }, result => {
+          this.placesService.getDetails({ placeId: result[0].place_id }, (details) => {
+            for (let i = 0; i < details.address_components.length; i++) {
+              let addressType = details.address_components[i].types[0];
+              if (addressType == "locality") {
+                this.cityName = details.address_components[i].long_name;
+              }
+            }
+            for (let i = 0; i < details.address_components.length; i++) {
+              let addressType = details.address_components[i].types[0];
+              if (addressType == "country") {
+                this.countryCode = details.address_components[i].short_name;
+              }
+            }
+            if (this.countryCode != '' && this.cityName != '') {
+              this.saveDisabled = false;
+
+            }
+          });
+        })
+      })
     });
-
-    
-
   }
 
   selectPlace(place) {
@@ -60,7 +92,8 @@ export class GeolocationPage {
         this.saveDisabled = false;
 
         this.maps.map.setCenter({ lat: location.lat, lng: location.lng });
-        
+
+        this.forecastDisabled = false;
 
         this.location = location;
 
@@ -101,11 +134,19 @@ export class GeolocationPage {
   }
 
   save() {
-    this.viewCtrl.dismiss(this.location);
+    this.viewCtrl.dismiss({ name: this.cityName, country: this.countryCode });
   }
 
   close() {
     this.viewCtrl.dismiss();
+  }
+
+  viewForecast() {
+    let location = {
+      lat: this.lat,
+      lon: this.lon,
+    }
+    this.navCtrl.push('ForecastPage', { citiesList: location, map: this.fromMap, geo: this.byGeo })
   }
 
   // map: any;

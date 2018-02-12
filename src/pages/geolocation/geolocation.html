@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="danger">
-    <ion-title>Geolocation</ion-title>
+    <ion-title>Climax</ion-title>
     <ion-buttons left>
       <button ion-button (click)="close()" icon-start>
           <ion-icon name="arrow-back"></ion-icon>
@@ -24,6 +24,6 @@
   <div #map id="map" style="height: 300px"></div>
   <div padding></div>
 
-  <button ion-button block>Watch Forecast</button>
-  <button ion-button block>Add to the Location List</button>
+  <button [disabled]="forecastDisabled" ion-button block (click)="viewForecast()">Watch Forecast</button>
+  <button [disabled]="saveDisabled" ion-button block (click)="save()">Add to the Location List</button>
 </ion-content>

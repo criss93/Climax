@@ -12,7 +12,7 @@ export class GoogleMapsProvider {
 
   }
 
-  initMap(mapElement: any): Promise<any>{
+  initMap(mapElement: any): Promise<any> {
 
     this.mapElement = mapElement;
 
@@ -29,6 +29,7 @@ export class GoogleMapsProvider {
         }
 
         this.map = new google.maps.Map(this.mapElement, options);
+        
         resolve(true);
 
       });

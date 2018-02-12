@@ -40,13 +40,22 @@ export class RestServiceProvider {
     return this.http.get(url)
   }
 
-  test(city: string ){
-    let url = this.apiUrl + 'weather';
-    url += '?q=' + city;
+  geoForecast(lat: number, lon: number, numOfDays: number) {
+    let url = this.apiUrl + 'forecast';
+    url += `?lat=${lat}&lon=${lon}`;
+    url += '&cnt=' + numOfDays;
     url += '&APPID=' + this.apiKey;
 
     return this.http.get(url)
   }
+
+  // test(city: string ){
+  //   let url = this.apiUrl + 'weather';
+  //   url += '?q=' + city;
+  //   url += '&APPID=' + this.apiKey;
+
+  //   return this.http.get(url)
+  // }
 
   // localWeather(numOfDays: number) {
 
@@ -75,7 +84,7 @@ export class RestServiceProvider {
 
         this.http.get(url).subscribe(data => {
           observer.next(data)
-        } )
+        })
       }).catch((error) => {
         console.log(error);
       });
@@ -84,7 +93,7 @@ export class RestServiceProvider {
     return obs;
   }
 
-  
+
 
 
 

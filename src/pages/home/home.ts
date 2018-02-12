@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
 import { StorageProvider } from '../../providers/storage/storage';
 import { DatabaseProvider } from '../../providers/database/database';
-// import { Observable } from 'rxjs/Observable';
 
 
 @IonicPage()
@@ -15,9 +14,9 @@ export class HomePage {
 
   localWeather = [];
   counter: number;
-  aux: Array<Object>;
   name: string;
   country: string;
+  fromMap: false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private modalCtrl: ModalController, private storage: StorageProvider, private restService: RestServiceProvider) {
     // this.storage.clearStorage();
@@ -51,7 +50,7 @@ export class HomePage {
 
 
   viewForecast(citiesList) {
-    this.navCtrl.push('ForecastPage', { citiesList: citiesList })
+    this.navCtrl.push('ForecastPage', { citiesList: citiesList, map: this.fromMap })
   }
 
 
@@ -63,8 +62,8 @@ export class HomePage {
   navigateToGeolocationPage() {
     let modal = this.modalCtrl.create('GeolocationPage');
 
-    modal.onDidDismiss((location) => {
-      console.log(location);
+    modal.onDidDismiss((data) => {
+      this.database.addCity(data.name, data.country)
     });
 
     modal.present();
@@ -74,28 +73,12 @@ export class HomePage {
 
     let modal = this.modalCtrl.create('TestPage');
 
-    modal.onDidDismiss((location) => {
-      console.log(location);
+    modal.onDidDismiss((data) => {
+      this.database.addCity(data.location.name, data.countryCode);
     });
 
     modal.present();
 
   }
-
-  // ionViewWillLoad(){
-  //   this.afAuth.authState.subscribe(data => {
-  //     if (data.email && data.uid){
-  //     this.toast.create({
-  //       message: `Bienvenido a Climax ${data.email}`,
-  //       duration: 3000
-  //     }).present();
-  //   } else {
-  //     this.toast.create({
-  //       message: `Algo pasó...`,
-  //       duration: 3000
-  //     }).present();
-  //   }
-  //   });
-  // }
 
 }
