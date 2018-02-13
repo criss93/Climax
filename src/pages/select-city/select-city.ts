@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
-import { RestServiceProvider } from '../../providers/rest-service/rest-service';
-import { StorageProvider } from '../../providers/storage/storage';
 import { DatabaseProvider } from '../../providers/database/database';
 
 @IonicPage()
@@ -13,9 +11,11 @@ export class SelectCityPage {
 
   citiesList: any[] = [];
   sortedCL: any[] = [];
+  deleteDisabled = false;
+  exists = false;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private storage: StorageProvider, private restService: RestServiceProvider, private modCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private modCtrl: ModalController) {
   }
 
   ionViewWillLoad() {
@@ -36,16 +36,16 @@ export class SelectCityPage {
     let addWeatherModal = this.modCtrl.create('AddCityPage');
     addWeatherModal.onWillDismiss((data) => {
       if (data) {
-        console.log(data);
         this.database.addCity(data.city, data.country);
         this.getStoredCities();
-        // this.citiesList.push(data);
-        // this.storage.setData(this.citiesList);
-        // this.getCities(data.city, data.country);
-
       }
     });
     addWeatherModal.present();
+  }
+
+  deleteCity(city) {
+    this.database.deleteCity(city);
+    this.getStoredCities();
   }
 
   getStoredCities() {
@@ -55,19 +55,6 @@ export class SelectCityPage {
     }).catch((error) => {
       console.log(error);
     });
-    // return this.database.getCities().then((data) => {
-    //   let list: Array<Cities> = [];
-    //   if (data) {
-    //     for(let city of data) {
-    //       list.push(new city(city.name, city.country))
-    //     }
-    //     this.citiesList = list;
-    //   }
-    // });
-    // this.storage.getData().then(cities => {
-    //   this.citiesList = JSON.parse(cities) || [];
-    //   // this.citiesList = cities;
-    // })
   }
 
   refresh() {

@@ -4,7 +4,7 @@
     <ion-title>Climax</ion-title>
     <ion-buttons right>
       <button ion-button (click)="refresh()" icon-start>
-          <ion-icon name="refresh"></ion-icon>
+        <ion-icon name="refresh"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -13,18 +13,22 @@
 
 
 <ion-content class="scroll-content" padding>
-
+  <ion-item>
+    <ion-icon name="trash" item-right></ion-icon>
+    <ion-toggle [(ngModel)]="deleteDisabled"></ion-toggle>
+  </ion-item>
   <ion-list>
-    <ion-item *ngFor="let city of sortedCL" (click)="viewForecast(city)">
+    <ion-item *ngFor="let city of citiesList">
+      <button ion-button round ouline name="trash" [disabled]="!deleteDisabled" item-left (click)="deleteCity(city)"></button>
       <h2>{{city.name}}, {{city.country}}</h2>
-      <ion-icon name="arrow-forward" item-right></ion-icon>
+      <ion-icon name="arrow-forward" item-right (click)="viewForecast(city)"></ion-icon>
     </ion-item>
   </ion-list>
 
   <ion-fab bottom right>
     <button ion-fab color="primary" (click)="addCity()">
       <ion-icon name="add"></ion-icon>
-    </button> 
+    </button>
   </ion-fab>
 
 </ion-content>

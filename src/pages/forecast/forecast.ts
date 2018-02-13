@@ -14,6 +14,7 @@ export class ForecastPage {
   isMap: boolean;
   byGeo: boolean;
   countryCode: string;
+  rainV: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private restService: RestServiceProvider) {
     try {
@@ -48,23 +49,24 @@ export class ForecastPage {
 
   getGeoForecast(lat, lon) {
     this.restService.geoForecast(lat, lon)
-    .subscribe(data => {
-      this.forecast = data['list']
-    })
+      .subscribe(data => {
+        this.forecast = data['list']
+      })
   }
 
   showDetails(city) {
+
     let alert = this.alertCtrl.create({
       title: 'Forecast Details',
       subTitle: `Pressuere: ${city.main.pressure}hPa,
-      Humidity: ${city.main.humidity}%,
-      Description: ${city.weather[0].description},
-      Wind Speed: ${city.wind.speed}m/s,
-      Wind direction: ${city.wind.deg}°,
-      Rain volume: ${city.rain['3h']}mm`,
+        Humidity: ${city.main.humidity}%,
+        Description: ${city.weather[0].description},
+        Wind Speed: ${city.wind.speed}m/s,
+        Wind direction: ${city.wind.deg}°`,
       buttons: ['OK']
     });
     alert.present();
+
   }
 
   ionViewDidLoad() {

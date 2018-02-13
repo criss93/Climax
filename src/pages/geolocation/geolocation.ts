@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ViewController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 

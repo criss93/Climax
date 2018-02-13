@@ -1,6 +1,5 @@
 import { Component, ElementRef, ViewChild, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ViewController, ModalController } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
+import { IonicPage, NavController, ViewController, ModalController } from 'ionic-angular';
 import { GoogleMapsProvider } from '../../providers/google-maps/google-maps';
 import { DatabaseProvider } from '../../providers/database/database';
 

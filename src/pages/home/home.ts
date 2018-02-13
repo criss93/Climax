@@ -16,7 +16,7 @@ export class HomePage {
   counter: number;
   name: string;
   country: string;
-  fromMap: false;
+  fromMap = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private modalCtrl: ModalController, private storage: StorageProvider, private restService: RestServiceProvider) {
     // this.storage.clearStorage();

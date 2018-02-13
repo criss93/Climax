@@ -18,18 +18,6 @@ export class DatabaseProvider {
         this.db = db;
       })
     })
-    // this.platform.ready().then(() => {
-    //   this.sqlite.create({
-    //     name: 'todos.db',
-    //     location: 'default'
-    //   })
-    //     .then((db: SQLiteObject) => {
-    //       db.executeSql('CREATE TABLE IF NOT EXISTS cities(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, country TEXT)', {})
-    //         .then(() => console.log('Executed SQL'))
-    //         .catch(e => console.log(e));
-    //       this.db = db;
-    //     }).catch(e => console.log(e));
-    // });
   }
 
   addCity(name: string, country: string) {
