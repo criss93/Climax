@@ -3,9 +3,6 @@ import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angu
 import { RestServiceProvider } from '../../providers/rest-service/rest-service';
 import { StorageProvider } from '../../providers/storage/storage';
 import { DatabaseProvider } from '../../providers/database/database';
-// import { Cities } from '../../models/cities.interface';s
-// import { Observable } from 'rxjs/Observable';
-// import 'rxjs/add/operator/map';
 
 @IonicPage()
 @Component({
@@ -14,20 +11,25 @@ import { DatabaseProvider } from '../../providers/database/database';
 })
 export class SelectCityPage {
 
-  // citiesList: Array<Cities>;
-  // city: Cities;
   citiesList: any[] = [];
-
-  // TestList = [];
+  sortedCL: any[] = [];
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private database: DatabaseProvider, private storage: StorageProvider, private restService: RestServiceProvider, private modCtrl: ModalController) {
-    
-    // this.getTest();
   }
 
-  ionViewDidLoad() {
+  ionViewWillLoad() {
     this.getStoredCities();
+  }
+  ionViewWillLeave() {
+    this.getStoredCities();
+  }
+
+  sortByCityName(array) {
+    return array.sort((a, b) => {
+      let x = a['name']; let y = b['name'];
+      return ((x < y) ? -1 : ((x > y) ? 0 : 1));
+    });
   }
 
   addCity() {
@@ -46,15 +48,10 @@ export class SelectCityPage {
     addWeatherModal.present();
   }
 
-  // getTest() {
-  //   this.storage.getDataTest().then(cities => {
-  //     this.TestList = JSON.parse(cities) || [];
-  //   })
-  // }
-
   getStoredCities() {
     this.database.getCities().then(data => {
       this.citiesList = data
+      this.sortedCL = this.sortByCityName(this.citiesList);
     }).catch((error) => {
       console.log(error);
     });
@@ -73,21 +70,13 @@ export class SelectCityPage {
     // })
   }
 
+  refresh() {
+    this.getStoredCities();
+  }
+
   navigateToPage(pageName: string) {
     this.navCtrl.push(pageName);
   }
-
-  // getWeather(city: string, country: string) {
-  //   try {
-  //     this.restService.cityWeather(city, country)
-  //     .subscribe(data => {
-  //       this.citiesList.push(data);
-  //     })
-
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
 
   viewForecast(citiesList) {
     this.navCtrl.push('ForecastPage', { citiesList: citiesList })

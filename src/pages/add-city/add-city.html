@@ -12,8 +12,7 @@
 </ion-header>
 
 
-<ion-content padding>
-  <!-- <ion-searchbar>Buscar ciudad...</ion-searchbar> -->
+<ion-content class="scroll-content" padding>
   <ion-list>
     <ion-item>
       <ion-label floating>City Name</ion-label>
@@ -22,10 +21,6 @@
     <ion-item>
       <ion-label floating>Country Code</ion-label>
       <ion-input type="text" [(ngModel)]="data.country"></ion-input>
-      <!-- <ion-select [(ngModel)]="data.country">
-        <ion-option value="us">United States</ion-option>
-        <ion-option value="uk">United Kingdom</ion-option>
-      </ion-select> -->
     </ion-item>
   </ion-list>
   <div padding>

@@ -7,7 +7,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="scroll-content" padding>
 
   <div>
     <h3>Find a city's weather by:</h3>
@@ -20,7 +20,7 @@
       <ion-thumbnail item-left>
         <img src="http://openweathermap.org/img/w/{{city.weather[0].icon}}.png">
       </ion-thumbnail>
-      <h2>{{city.name}}</h2>
+      <h2>{{city.name}} {{city.main.temp | temperaturePipe}}</h2>
       <h3>{{city.dt * 1000 | date: 'EEEE'}}</h3>
       <h3>Low: {{city.temp_min | temperaturePipe}} High: {{city.main.temp_max | temperaturePipe}}</h3>
       <ion-icon name="arrow-forward" item-right></ion-icon>

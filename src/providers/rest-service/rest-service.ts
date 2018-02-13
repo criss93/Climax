@@ -30,20 +30,18 @@ export class RestServiceProvider {
     return this.http.get(url)
   }
 
-  forecast(cityname: string, countryCode: string, numOfDays: number) {
+  forecast(cityname: string, countryCode: string) {
     let url = this.apiUrl + 'forecast';
     url += '?q=' + cityname;
     url += ',' + countryCode;
-    url += '&cnt=' + numOfDays;
     url += '&APPID=' + this.apiKey;
 
     return this.http.get(url)
   }
 
-  geoForecast(lat: number, lon: number, numOfDays: number) {
+  geoForecast(lat: number, lon: number) {
     let url = this.apiUrl + 'forecast';
     url += `?lat=${lat}&lon=${lon}`;
-    url += '&cnt=' + numOfDays;
     url += '&APPID=' + this.apiKey;
 
     return this.http.get(url)
