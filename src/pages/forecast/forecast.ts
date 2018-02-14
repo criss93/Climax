@@ -14,20 +14,19 @@ export class ForecastPage {
   isMap: boolean;
   byGeo: boolean;
   countryCode: string;
-  rainV: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, private restService: RestServiceProvider) {
+    this.isMap = navParams.get('map');
+    this.byGeo = navParams.get('geo');
     try {
-      this.isMap = navParams.get('map');
-      if (this.isMap == true) {
-        this.byGeo = navParams.get('geo');
-        if (this.byGeo = true) {
-          this.citiesList = navParams.get('citiesList');
-          this.getGeoForecast(this.citiesList.lat, this.citiesList.lon);
-        } else {
+      if (this.isMap === true) {
+        if (this.byGeo === false) {
           this.citiesList = navParams.get('citiesList');
           this.countryCode = navParams.get('countryAux');
           this.getForecast(this.citiesList.name, this.countryCode)
+        } else {
+          this.citiesList = navParams.get('citiesList');
+          this.getGeoForecast(this.citiesList.lat, this.citiesList.lon);
         }
       } else {
         this.citiesList = navParams.get('citiesList');
@@ -38,12 +37,10 @@ export class ForecastPage {
     }
   }
 
-  getForecast(cityId, countryCode) {
-    this.restService.forecast(cityId, countryCode)
+  getForecast(city, countryCode) {
+    this.restService.forecast(city, countryCode)
       .subscribe(data => {
         this.forecast = data['list'];
-        this.citiesList = [];
-        this.citiesList.push(data['city']);
       })
   }
 

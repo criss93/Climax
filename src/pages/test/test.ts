@@ -65,7 +65,7 @@ export class TestPage {
         location.lng = details.geometry.location.lng();
         for (let i = 0; i < details.address_components.length; i++) {
           let addressType = details.address_components[i].types[0];
-          if (addressType == "country") {
+          if (addressType === "country") {
             this.countryCode = details.address_components[i].short_name;
           }
         }
@@ -125,7 +125,11 @@ export class TestPage {
   }
 
   viewForecast() {
-    this.navCtrl.push('ForecastPage', { citiesList: this.location, countryAux: this.countryCode, map: this.fromMap, geo: this.byGeo })
+    let location = {
+      name: this.location.name
+    }
+    let country = this.countryCode;
+    this.navCtrl.push('ForecastPage', { citiesList: location, countryAux: country, map: this.fromMap, geo: this.byGeo })
   }
 
   navigateToPage() {

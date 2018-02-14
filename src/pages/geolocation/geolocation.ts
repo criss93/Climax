@@ -149,42 +149,4 @@ export class GeolocationPage {
     this.navCtrl.push('ForecastPage', { citiesList: location, map: this.fromMap, geo: this.byGeo })
   }
 
-  // map: any;
-  // location: any;
-  // autocompleteService: any;
-  // placesService: any;
-  // query: string = '';
-  // places: any = [];
-
-  // constructor(private geolocation: Geolocation, private zone: NgZone, private viewCtrl: ViewController) {
-  //   this.displayMap();
-  // }
-
-  // displayMap() {
-
-  //   this.geolocation.getCurrentPosition().then(resp => {
-  //     const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-
-  //     const options = {
-  //       center: location,
-  //       zoom: 15,
-  //       streetViewControl: false,
-  //       mapTypeId: google.maps.MapTypeId.ROADMAP
-  //     };
-
-  //     this.map = new google.maps.Map(document.querySelector('#map'), options);
-  //     this.autocompleteService = new google.maps.places.AutocompleteService();
-  //     this.placesService = new google.maps.places.PlacesService(this.map.map);
-
-  //     this.map.addListener('click', (event) => {
-  //       console.log(event.latLng.lat())
-  //       console.log(event.latLng.lng())
-  //     });
-
-  //   }).catch((error) => {
-  //     console.log(error);
-  //   });
-
-  // }
-
 }
