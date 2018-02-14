@@ -14,7 +14,7 @@ export class DatabaseProvider {
         name: 'myDatabase.db',
         location: 'default'
       }).then((db:SQLiteObject) => {
-        db.executeSql('CREATE TABLE IF NOT EXISTS cities(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, country TEXT)', {});
+        db.executeSql('CREATE TABLE IF NOT EXISTS cities(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, country TEXT, CONSTRAINT name_unique UNIQUE (name, country))', {});
         this.db = db;
       })
     })
