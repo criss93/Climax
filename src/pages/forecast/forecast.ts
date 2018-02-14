@@ -55,7 +55,7 @@ export class ForecastPage {
 
     let alert = this.alertCtrl.create({
       title: 'Forecast Details',
-      subTitle: `Pressuere: ${city.main.pressure}hPa,
+      subTitle: `Pressure: ${city.main.pressure}hPa,
         Humidity: ${city.main.humidity}%,
         Description: ${city.weather[0].description},
         Wind Speed: ${city.wind.speed}m/s,
