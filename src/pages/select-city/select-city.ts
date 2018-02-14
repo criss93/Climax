@@ -51,7 +51,7 @@ export class SelectCityPage {
   getStoredCities() {
     this.database.getCities().then(data => {
       this.citiesList = data
-      this.sortedCL = this.sortByCityName(this.citiesList);
+      this.citiesList.sort();
     }).catch((error) => {
       console.log(error);
     });
