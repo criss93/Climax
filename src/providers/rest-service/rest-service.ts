@@ -52,7 +52,7 @@ export class RestServiceProvider {
       this.geolocation.getCurrentPosition().then(resp => {
         let lat = resp.coords.latitude;
         let lon = resp.coords.longitude;
-        let url = this.apiUrl + 'forecast';
+        let url = this.apiUrl + 'weather';
         url += `?lat=${lat}&lon=${lon}`;
         url += '&APPID=' + this.apiKey;
 
