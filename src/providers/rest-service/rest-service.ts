@@ -47,30 +47,6 @@ export class RestServiceProvider {
     return this.http.get(url)
   }
 
-  // test(city: string ){
-  //   let url = this.apiUrl + 'weather';
-  //   url += '?q=' + city;
-  //   url += '&APPID=' + this.apiKey;
-
-  //   return this.http.get(url)
-  // }
-
-  // localWeather(numOfDays: number) {
-
-  //   this.geolocation.getCurrentPosition().then(resp => {
-  //     let lat = resp.coords.latitude;
-  //     let lon = resp.coords.longitude;
-  //     this.lat = lat;
-  //     this.lon = lon;
-  //   });
-  //   let url = this.apiUrl + 'weather';
-  //   url += `?lat=${this.lat}&lon=${this.lon}`;
-  //   // url += '&cnt=' + numOfDays;
-  //   url += '&APPID=' + this.apiKey;
-
-  //   return this.http.get(url)
-  // }
-
   localWeather() {
     let obs = Observable.create(observer => {
       this.geolocation.getCurrentPosition().then(resp => {
